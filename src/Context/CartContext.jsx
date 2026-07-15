@@ -1,60 +1,77 @@
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
-export const CartContext = createContext();
+const CartContext = createContext();
 
-const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState([]);
+export const CartProvider = ({ children }) => {
+  const [items, setItems] = useState([]);
 
+  // Add item to cart. If it already exists, increment quantity.
+  // Stores id, name, price, restaurantId, imageUrl, and quantity.
   const addToCart = (item) => {
-    const existingItem = cart.find((cartItem) => cartItem.id === item.id);
-
-    if (existingItem) {
-      setCart(
-        cart.map((cartItem) =>
-          cartItem.id === item.id
-            ? { ...cartItem, quantity: cartItem.quantity + 1 }
-            : cartItem
-        )
-      );
-    } else {
-      setCart([...cart, { ...item, quantity: 1 }]);
-    }
+    setItems((prev) => {
+      const existing = prev.find((i) => i.id === item.id);
+      if (existing) {
+        return prev.map((i) =>
+          i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
+        );
+      }
+      return [
+        ...prev,
+        {
+          id: item.id,
+          name: item.name,
+          price: item.price,
+          restaurantId: item.restaurantId,
+          imageUrl: item.imageUrl ?? null,
+          quantity: 1,
+        },
+      ];
+    });
   };
 
-  const increaseQuantity = (id) => {
-    setCart(
-      cart.map((item) =>
-        item.id === id
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
+  // Remove an item from the cart entirely, regardless of quantity.
+  const removeFromCart = (itemId) => {
+    setItems((prev) => prev.filter((i) => i.id !== itemId));
+  };
+
+  // Increase the quantity of a single item by 1.
+  const increaseQuantity = (itemId) => {
+    setItems((prev) =>
+      prev.map((i) =>
+        i.id === itemId ? { ...i, quantity: i.quantity + 1 } : i
       )
     );
   };
 
-  const decreaseQuantity = (id) => {
-    setCart(
-      cart
-        .map((item) =>
-          item.id === id
-            ? { ...item, quantity: item.quantity - 1 }
-            : item
+  // Decrease quantity by 1. Auto-removes the item if quantity reaches 0.
+  const decreaseQuantity = (itemId) => {
+    setItems((prev) =>
+      prev
+        .map((i) =>
+          i.id === itemId ? { ...i, quantity: i.quantity - 1 } : i
         )
-        .filter((item) => item.quantity > 0)
+        .filter((i) => i.quantity > 0)
     );
   };
 
-  const removeItem = (id) => {
-    setCart(cart.filter((item) => item.id !== id));
-  };
+  // Remove every item from the cart.
+  const clearCart = () => setItems([]);
+
+  // Derived values — computed on every render, not stored in state.
+  const totalItems = items.reduce((sum, i) => sum + i.quantity, 0);
+  const totalPrice = items.reduce((sum, i) => sum + i.price * i.quantity, 0);
 
   return (
     <CartContext.Provider
       value={{
-        cart,
+        items,
         addToCart,
+        removeFromCart,
         increaseQuantity,
         decreaseQuantity,
-        removeItem,
+        clearCart,
+        totalItems,
+        totalPrice,
       }}
     >
       {children}
@@ -62,4 +79,4 @@ const CartProvider = ({ children }) => {
   );
 };
 
-export default CartProvider;
+export const useCart = () => useContext(CartContext);
