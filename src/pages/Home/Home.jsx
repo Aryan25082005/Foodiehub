@@ -1,17 +1,39 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getRestaurants } from "../../services/restaurantService";
+import RestaurantCard from "../../components/RestaurantCard/RestaurantCard";
 
 const Home = () => {
+  const [restaurants, setRestaurants] = useState([]);
+
   useEffect(() => {
-    const loadRestaurants = async () => {
-      const restaurants = await getRestaurants();
-      console.log(restaurants);
+    const fetchRestaurants = async () => {
+      const data = await getRestaurants();
+      setRestaurants(data);
     };
 
-    loadRestaurants();
+    fetchRestaurants();
   }, []);
 
-  return <h1>Home Page</h1>;
+  return (
+  <div>
+    <h1>Restaurants</h1>
+
+    <div
+      style={{
+        display: "flex",
+        flexWrap: "wrap",
+        gap: "20px",
+      }}
+    >
+      {restaurants.map((restaurant) => (
+        <RestaurantCard
+          key={restaurant.id}
+          restaurant={restaurant}
+        />
+      ))}
+    </div>
+  </div>
+);
 };
 
 export default Home;
