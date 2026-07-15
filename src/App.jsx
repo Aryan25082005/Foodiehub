@@ -10,7 +10,11 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Orders from "./pages/Orders/Orders";
 import Profile from "./pages/Profile/Profile";
+import About from "./pages/About/About";
+import Contact from "./pages/Contact/Contact";
 import Admin from "./pages/Admin/Admin";
+import RestaurantMenu from "./pages/RestaurantMenu/RestaurantMenu";
+import Checkout from "./pages/Checkout/Checkout";
 
 function App() {
   return (
@@ -22,14 +26,18 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/orders" element={<Orders />} />
         <Route path="/profile" element={<Profile />} />
-      </Route>
-
-      
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/admin" element={<Admin />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/admin" element={<Admin />} />
+        {/* <Route path="/restaurant/:id" element={<RestaurantMenu />} /> */}
+        <Route path="/checkout" element={<Checkout />} />
+        </Route>
     </Routes>
   );
 }
 
 export default App;
+
+
