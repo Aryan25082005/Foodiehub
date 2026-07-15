@@ -1,0 +1,93 @@
+/* ============================================================
+   RestaurantDetails — scoped styles
+   ============================================================ */
+
+.rd-page {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+/* Back navigation */
+.rd-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #555;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.rd-back:hover {
+  color: #e85d04;
+}
+
+/* Hero image — responsive via aspect-ratio */
+.rd-hero-img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 14px;
+  display: block;
+}
+
+/* Info card below the image */
+.rd-info-card {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 14px;
+  padding: 24px;
+  margin-top: 20px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+}
+
+.rd-name {
+  font-size: 26px;
+  font-weight: 700;
+  margin: 0 0 16px;
+  color: #1a1a1a;
+}
+
+.rd-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.rd-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f5f5f5;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
+}
+
+/* Loading / Error states */
+.rd-status {
+  text-align: center;
+  padding: 60px 16px;
+  color: #777;
+  font-size: 16px;
+}
+
+/* ============================================================
+   Menu section placeholder — ready for future implementation
+   ============================================================ */
+
+.rd-menu-section {
+  margin-top: 32px;
+}
+
+.rd-section-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #f0f0f0;
+}
