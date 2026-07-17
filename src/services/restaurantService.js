@@ -1,4 +1,4 @@
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 
 export const getRestaurants = async () => {
@@ -13,5 +13,20 @@ export const getRestaurants = async () => {
   } catch (error) {
     console.error("Error fetching restaurants:", error);
     return [];
+  }
+};
+
+// Fetch a single restaurant by Firestore document ID
+export const getRestaurantById = async (id) => {
+  try {
+    const docRef = doc(db, "restaurants", id);
+    const snapshot = await getDoc(docRef);
+
+    if (!snapshot.exists()) return null;
+
+    return { id: snapshot.id, ...snapshot.data() };
+  } catch (error) {
+    console.error("Error fetching restaurant:", error);
+    return null;
   }
 };
