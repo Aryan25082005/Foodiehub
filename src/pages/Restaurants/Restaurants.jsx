@@ -1,10 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import RestaurantsList from "../../components/Restaurants/Restaurants";
+import { getRestaurants } from "../../services/restaurantService";
 
 const Restaurants = () => {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
+  const [restaurants, setRestaurants] = useState([]);
+
+  useEffect(() => {
+    const fetchRestaurants = async () => {
+      const data = await getRestaurants();
+      setRestaurants(data);
+    };
+    fetchRestaurants();
+  }, []);
 
   return (
     <div className="max-w-7xl mx-auto py-10">
@@ -49,8 +59,10 @@ const Restaurants = () => {
       />
 
       <RestaurantsList 
-      search={search}
-      category={category} />
+        restaurants={restaurants}
+        search={search}
+        category={category} 
+      />
 
     </div>
   );

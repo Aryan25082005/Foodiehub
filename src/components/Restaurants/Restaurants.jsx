@@ -11,9 +11,11 @@ const Restaurants = ({ search, category, restaurants = [] }) => {
     .filter((restaurant) =>
       restaurant.name.toLowerCase().includes((search || "").toLowerCase())
     )
-    .filter((restaurant) =>
-      !category || category === "All" ? true : restaurant.category === category
-    );
+    .filter((restaurant) => {
+      if (!category || category === "All") return true;
+      if (!restaurant.cuisine) return false;
+      return restaurant.cuisine.trim().toLowerCase() === category.trim().toLowerCase();
+    });
 
   console.log("Filtered:", filteredRestaurants);
 
