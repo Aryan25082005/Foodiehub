@@ -206,3 +206,30 @@
   font-weight: 700;
   color: #1a1a1a;
 }
+
+/* Proceed to Checkout CTA */
+.cart-checkout-btn {
+  display: block;
+  width: 100%;
+  margin-top: 16px;
+  padding: 14px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  background: #e85d04;
+  border: none;
+  border-radius: 10px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.cart-checkout-btn:hover {
+  background: #c94e00;
+}
+
+.cart-checkout-btn:active {
+  transform: scale(0.98);
+}
+

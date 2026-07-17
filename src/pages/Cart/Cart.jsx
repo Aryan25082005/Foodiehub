@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import "./Cart.css";
 
@@ -104,6 +105,11 @@ function Cart() {
               <span>Total</span>
               <span>₹{totalPrice}</span>
             </div>
+
+            {/* Proceed to Checkout */}
+            <Link to="/checkout" className="cart-checkout-btn">
+              Proceed to Checkout
+            </Link>
           </div>
         </>
       )}
