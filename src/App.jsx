@@ -20,13 +20,12 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/restaurants" element={<Restaurants />} />
         <Route path="/restaurant/:id" element={<RestaurantDetails />} />
-        <Route path="/cart"     element={<Cart />} />
+        <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/orders" element={<Orders />} />
         <Route path="/profile" element={<Profile />} />
       </Route>
 
-      
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/admin" element={<Admin />} />

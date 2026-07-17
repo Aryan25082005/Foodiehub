@@ -3,9 +3,23 @@
    ============================================================ */
 
 .cart-page {
-  max-width: 720px;
+  max-width: 960px;
   margin: 0 auto;
   padding: 24px 16px 48px;
+}
+
+/* Two-column grid — left: items, right: summary */
+.cart-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 720px) {
+  .cart-layout {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Page header row */
@@ -177,12 +191,21 @@
 /* ── Order summary ──────────────────────────────────────── */
 
 .cart-summary {
-  margin-top: 28px;
   background: #fff;
   border: 1px solid #eee;
   border-radius: 12px;
   padding: 20px 24px;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+  /* margin-top removed — handled by grid gap */
+}
+
+.cart-summary-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 16px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #f0f0f0;
 }
 
 .cart-summary-row {
