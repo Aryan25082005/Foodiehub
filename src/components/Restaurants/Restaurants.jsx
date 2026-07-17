@@ -1,81 +1,45 @@
-// import restaurants from "../../data/Restaurants";
-// import RestaurantCard from "../RestaurantCard/RestaurantCard";
-
-// const Restaurants = ({ search,category }) => {
-//   return (
-//     <section className="max-w-7xl mx-auto px-6 py-16">
-
-//       <h2 className="text-4xl font-bold text-center mb-10">
-//         Popular Restaurants
-//       </h2>
-
-//       <p className="text-2xl text-center text-gray-900 mb-10">
-//         Order from the most loved restaurants near you.
-//       </p>
-
-//       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-
-//         {restaurants
-//          .filter((restaurant) =>
-//             restaurant.name.toLowerCase().includes(search.toLowerCase())
-//           )
-//           .filter((restaurant) =>
-//             !category || category === "All"
-//               ? true
-//               : restaurant.category === category
-//           )
-//           .map((restaurant) => (
-//             <RestaurantCard
-//               key={restaurant.id}
-//               restaurant={restaurant}
-//             />
-//         ))}
-
-//       </div>
-
-//     </section>
-//   );
-// };
-
-// export default Restaurants;
-
-
-
-import restaurants from "../../data/Restaurants";
 import RestaurantCard from "../RestaurantCard/RestaurantCard";
+import "./Restaurants.css";
 
-const Restaurants = ({ search,category }) => {
+const Restaurants = ({ search, category, restaurants = [] }) => {
+  console.log("Restaurants prop:", restaurants);
+  console.log("Search:", search);
+  console.log("Category:", category);
+
+  // Always use Firestore data passed as props. No local fallback.
+  const filteredRestaurants = restaurants
+    .filter((restaurant) =>
+      restaurant.name.toLowerCase().includes((search || "").toLowerCase())
+    )
+    .filter((restaurant) =>
+      !category || category === "All" ? true : restaurant.category === category
+    );
+
+  console.log("Filtered:", filteredRestaurants);
+
   return (
-    <section className="max-w-7xl mx-auto px-6 py-16">
+    <section className="restaurants-section">
+      <div className="restaurants-inner">
+        <div className="restaurants-header">
+          <h2 className="restaurants-title">Featured Restaurants</h2>
+          <p className="restaurants-subtitle">
+            Order from the most loved restaurants near you.
+          </p>
+        </div>
 
-      <h2 className="text-4xl font-bold text-center mb-10">
-        Popular Restaurants
-      </h2>
-
-      <p className="text-2xl text-center text-gray-900 mb-10">
-        Order from the most loved restaurants near you.
-      </p>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-
-        {restaurants
-         .filter((restaurant) =>
-            restaurant.name.toLowerCase().includes(search.toLowerCase())
-          )
-          .filter((restaurant) =>
-            !category || category === "All"
-              ? true
-              : restaurant.category === category
-          )
-          .map((restaurant) => (
-            <RestaurantCard
-              key={restaurant.id}
-              restaurant={restaurant}
-            />
-        ))}
-
+        {filteredRestaurants.length > 0 ? (
+          <div className="restaurants-grid">
+            {filteredRestaurants.map((restaurant) => (
+              <RestaurantCard key={restaurant.id} restaurant={restaurant} />
+            ))}
+          </div>
+        ) : (
+          <div className="restaurants-empty">
+            <span className="restaurants-empty-icon">🍽</span>
+            <p>No restaurants found matching your criteria.</p>
+          </div>
+        )}
       </div>
-
     </section>
   );
 };

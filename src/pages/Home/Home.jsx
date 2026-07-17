@@ -1,73 +1,11 @@
-// <<<<<<< Updated upstream
-// import { useEffect, useState } from "react";
-// import { getRestaurants } from "../../services/restaurantService";
-// import RestaurantCard from "../../components/RestaurantCard/RestaurantCard";
-
-// const Home = () => {
-//   const [restaurants, setRestaurants] = useState([]);
-
-//   useEffect(() => {
-//     const fetchRestaurants = async () => {
-//       const data = await getRestaurants();
-//       setRestaurants(data);
-//     };
-
-//     fetchRestaurants();
-//   }, []);
-
-//   return (
-//   <div>
-//     <h1>Restaurants</h1>
-
-//     <div
-//       style={{
-//         display: "flex",
-//         flexWrap: "wrap",
-//         gap: "20px",
-//       }}
-//     >
-//       {restaurants.map((restaurant) => (
-//         <RestaurantCard
-//           key={restaurant.id}
-//           restaurant={restaurant}
-//         />
-//       ))}
-//     </div>
-//   </div>
-// );
-// =======
-// import { useState } from "react";
-// import Hero from "../../components/Hero/Hero";
-// import Categories from "../../components/Categories/Categories";
-// import Restaurants from "../../components/Restaurants/Restaurants";
-
-
-// const Home = () => {
-//   const [search, setSearch] = useState("");
-//   return (
-//     <>
-//       <Hero
-//         search={search}
-//         setSearch={setSearch}
-//       />
-//       <Categories />
-//       <Restaurants
-//         restaurants={restaurants}
-//         search={search}/>
-
-      
-//     </>
-//   );
-// >>>>>>> Stashed changes
-// };
-
-// export default Home;
-
 import { useEffect, useState } from "react";
+import { getRestaurants } from "../../services/restaurantService";
 import Hero from "../../components/Hero/Hero";
 import Categories from "../../components/Categories/Categories";
+import OffersBanner from "../../components/OffersBanner/OffersBanner";
+import Features from "../../components/Features/Features";
 import Restaurants from "../../components/Restaurants/Restaurants";
-import { getRestaurants } from "../../services/restaurantService";
+import "./Home.css";
 
 const Home = () => {
   const [search, setSearch] = useState("");
@@ -76,26 +14,22 @@ const Home = () => {
   useEffect(() => {
     const fetchRestaurants = async () => {
       const data = await getRestaurants();
+      console.log("Firestore restaurants:", data);
       setRestaurants(data);
     };
-
     fetchRestaurants();
   }, []);
 
   return (
-    <>
-      <Hero
-        search={search}
-        setSearch={setSearch}
-      />
-
+    <div className="home-page">
+      <Hero search={search} setSearch={setSearch} />
       <Categories />
-
-      <Restaurants
-        restaurants={restaurants}
-        search={search}
-      />
-    </>
+      <div id="offers">
+        <OffersBanner />
+      </div>
+      <Features />
+      <Restaurants restaurants={restaurants} search={search} />
+    </div>
   );
 };
 

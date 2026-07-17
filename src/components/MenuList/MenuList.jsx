@@ -18,42 +18,66 @@ function MenuList({ restaurantId }) {
     fetchMenu();
   }, [restaurantId]);
 
-  const handleAddToCart = (item) => addToCart(item);
+  const handleAddToCart = (item) => {
+    addToCart(item);
+  };
 
   if (loading) {
-    return <p className="ml-status">Loading menu...</p>;
+    return (
+      <div className="ml-status-wrap">
+        <div className="ml-spinner"></div>
+        <p>Loading menu...</p>
+      </div>
+    );
   }
 
   if (menuItems.length === 0) {
-    return <p className="ml-status">No menu items available.</p>;
+    return (
+      <div className="ml-status-wrap">
+        <span className="ml-empty-icon">🍽️</span>
+        <p>No menu items available for this restaurant.</p>
+      </div>
+    );
   }
 
   return (
-    <ul className="ml-list" aria-label="Menu items">
+    <div className="ml-grid" aria-label="Menu items">
       {menuItems.map((item) => (
-        <li key={item.id} className="ml-item">
-          {/* Name + description */}
-          <div className="ml-item-info">
-            <p className="ml-item-name">{item.name}</p>
+        <article key={item.id} className="ml-card">
+          <div className="ml-info">
+            <h3 className="ml-name">{item.name}</h3>
+            <p className="ml-price">₹{item.price}</p>
             {item.description && (
-              <p className="ml-item-description">{item.description}</p>
+              <p className="ml-desc">{item.description}</p>
             )}
           </div>
 
-          {/* Price + Add to Cart */}
-          <div className="ml-item-actions">
-            <span className="ml-item-price">₹{item.price}</span>
-            <button
-              className="ml-add-btn"
-              onClick={() => handleAddToCart(item)}
-              aria-label={`Add ${item.name} to cart`}
-            >
-              Add to Cart
-            </button>
+          <div className="ml-action">
+            <div className="ml-img-box">
+              {item.image || item.imageUrl ? (
+                <img
+                  src={item.image || item.imageUrl}
+                  alt={item.name}
+                  className="ml-img"
+                  loading="lazy"
+                />
+              ) : (
+                <div className="ml-img-placeholder">
+                  <span aria-hidden="true">🍽️</span>
+                </div>
+              )}
+              <button
+                className="ml-add-btn"
+                onClick={() => handleAddToCart(item)}
+                aria-label={`Add ${item.name} to cart`}
+              >
+                ADD
+              </button>
+            </div>
           </div>
-        </li>
+        </article>
       ))}
-    </ul>
+    </div>
   );
 }
 

@@ -1,96 +1,196 @@
 /* ============================================================
-   MenuList — scoped styles
+   MenuList Component
    ============================================================ */
 
-.ml-list {
+/* Loading / Empty States */
+.ml-status-wrap {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-}
-
-/* Individual menu item card */
-.ml-item {
-  display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+  justify-content: center;
+  padding: 60px 20px;
   background: #fff;
-  border: 1px solid #eee;
-  border-radius: 12px;
-  padding: 16px 20px;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
-  transition: box-shadow 0.2s;
-}
-
-.ml-item:hover {
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.09);
-}
-
-/* Left side — name + description */
-.ml-item-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.ml-item-name {
-  font-size: 15px;
-  font-weight: 600;
-  color: #1a1a1a;
-  margin: 0 0 4px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.ml-item-description {
-  font-size: 13px;
-  color: #777;
-  margin: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* Right side — price + button */
-.ml-item-actions {
-  display: flex;
-  align-items: center;
+  border-radius: 16px;
+  border: 1px dashed #e0e0e0;
+  color: #666;
+  text-align: center;
   gap: 16px;
-  flex-shrink: 0;
 }
 
-.ml-item-price {
-  font-size: 15px;
+.ml-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #eee;
+  border-top-color: #e85d04;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.ml-empty-icon {
+  font-size: 40px;
+  opacity: 0.5;
+}
+
+/* Grid Layout */
+.ml-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 800px) {
+  .ml-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Menu Card */
+.ml-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  border-radius: 20px;
+  padding: 20px;
+  gap: 20px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  animation: ml-fade-up 0.4s ease both;
+}
+
+.ml-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+}
+
+@keyframes ml-fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Info Section (Left) */
+.ml-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ml-name {
+  font-size: 18px;
   font-weight: 700;
   color: #1a1a1a;
-  white-space: nowrap;
+  margin: 0;
 }
 
-.ml-add-btn {
-  padding: 8px 16px;
-  font-size: 13px;
+.ml-price {
+  font-size: 16px;
   font-weight: 600;
-  color: #fff;
-  background: #e85d04;
-  border: none;
+  color: #e85d04;
+  margin: 0;
+}
+
+.ml-desc {
+  font-size: 14px;
+  color: #666;
+  margin: 4px 0 0;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Action Section (Right) */
+.ml-action {
+  flex-shrink: 0;
+  width: 120px;
+}
+
+.ml-img-box {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 12px;
+  background: #f8f8f8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.ml-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.ml-img-placeholder {
+  font-size: 32px;
+  color: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* Add Button overlapping the image */
+.ml-add-btn {
+  position: absolute;
+  bottom: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  color: #e85d04;
+  border: 1px solid #e0e0e0;
+  padding: 6px 20px;
+  font-size: 14px;
+  font-weight: 800;
   border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   cursor: pointer;
-  transition: background 0.2s, transform 0.1s;
-  white-space: nowrap;
+  transition: all 0.2s ease;
 }
 
 .ml-add-btn:hover {
-  background: #c94e00;
+  background: #e85d04;
+  color: #fff;
+  border-color: #e85d04;
+  box-shadow: 0 4px 16px rgba(232, 93, 4, 0.3);
 }
 
 .ml-add-btn:active {
-  transform: scale(0.96);
+  transform: translateX(-50%) scale(0.95);
 }
 
-/* Loading / empty states */
-.ml-status {
-  text-align: center;
-  padding: 32px 16px;
-  color: #aaa;
-  font-size: 14px;
+.ml-add-btn:focus-visible {
+  outline: 2px solid #e85d04;
+  outline-offset: 2px;
+}
+
+@media (max-width: 480px) {
+  .ml-card {
+    padding: 16px;
+    gap: 12px;
+  }
+  
+  .ml-action {
+    width: 100px;
+  }
+  
+  .ml-add-btn {
+    padding: 6px 16px;
+    font-size: 13px;
+    bottom: -12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ml-card {
+    animation: none;
+    transition: none;
+  }
 }
